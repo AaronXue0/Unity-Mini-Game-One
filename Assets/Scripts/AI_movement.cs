@@ -14,12 +14,7 @@ public class AI_movement : MonoBehaviour
 	private Vector2 movement;
 	public float Action_CD;
 	private float CD;
-
-    [SerializeField]
-    private GameObject fb;
-    [SerializeField]
-    private Rigidbody2D rb_fb;
-
+    
     // Start is called before the first frame update
     void Start()
 	{
@@ -33,9 +28,9 @@ public class AI_movement : MonoBehaviour
 		Reset();
         //transform.position = Vector2.MoveTowards(transform.position, fb.transform.position, speed * Time.deltaTime);
         //Debug.Log(fb.transform.position.x - transform.position.x);
-        if(Mathf.Abs(fb.transform.position.x - transform.position.x) < 3 && CD < 0.01)
+        if(CD < 0.01)
         {
-            animator.SetFloat("Action", 1.0f);
+            //animator.SetFloat("Action", 1.0f);
             CD = Action_CD;
         }
         else if (CD > 0.0)
@@ -48,8 +43,7 @@ public class AI_movement : MonoBehaviour
 	{
 		if (CD - 0.01 < 0.01)
 		{
-            movement = rb_fb.velocity;
-            Debug.Log(movement + "AI");
+            //Debug.Log(movement + "AI");
             if (Mathf.Abs(movement.y) > 0)
             {
                 movement.x = 0f;
@@ -75,8 +69,10 @@ public class AI_movement : MonoBehaviour
 }
 
 /*
+ * instantiate flame : "fly" and "face" the right side!
+
 fireball -> movement
 ai -> chase,predic
-tilemap
+tilemap : image broken
 score
 */

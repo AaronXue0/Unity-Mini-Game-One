@@ -16,7 +16,7 @@ public class Player_Movement : MonoBehaviour
     public float Action_CD;
     private float CD;
     //public Text txt_CD;
-    
+
     // Start is called before the first frame update
     void Start()
     {

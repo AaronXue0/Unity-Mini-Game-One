@@ -29,7 +29,7 @@ public class Fireball_movement : MonoBehaviour
 
     private void FixedUpdate()
     {
-        Debug.Log(rb.velocity.ToString());
+        //Debug.Log(rb.velocity.ToString());
         if (rb.velocity.x > 0)
             sr.flipX = true;
         else if (rb.velocity.x < 0)
@@ -42,25 +42,25 @@ public class Fireball_movement : MonoBehaviour
         {
             if (rb.velocity.x > 10)
                 rb.velocity = new Vector2(10f, rb.velocity.y);
-            if (rb.velocity.y > 4 || rb.velocity.y < 1)
-                rb.velocity = new Vector2(rb.velocity.x, 1.5f);
+            if (rb.velocity.y > 5 || rb.velocity.y < 1)
+                rb.velocity = new Vector2(rb.velocity.x, 3f);
             if (Mathf.Abs(rb.velocity.x) < 1f)
             {
                 rb.velocity = new Vector2(1 * Random.Range(0.9f, 1f) * startmovement.x, Random.Range(-1f, 1f) * startmovement.y);
             }
-            else if (Mathf.Abs(rb.velocity.x) < 10f && collision.transform.position.y >= transform.position.y)
+            else if (Mathf.Abs(rb.velocity.x) < 12f && collision.transform.position.y >= transform.position.y)
             {
                 rb.velocity = new Vector2(-1 * Random.Range(1.1f, 1.2f) * rb.velocity.x, Random.Range(-1.5f,-1.1f) * rb.velocity.y);
             }
-            else if (Mathf.Abs(rb.velocity.x) < 10f && collision.transform.position.y <= transform.position.y)
+            else if (Mathf.Abs(rb.velocity.x) < 12f && collision.transform.position.y <= transform.position.y)
             {
                 rb.velocity = new Vector2(-1 * Random.Range(1.1f, 1.2f) * rb.velocity.x, Random.Range(1.1f, 1.5f) * rb.velocity.y);
             }
-            else if (Mathf.Abs(rb.velocity.y) < 3f && collision.transform.position.y <= transform.position.y)
+            else if (Mathf.Abs(rb.velocity.y) < 5f && collision.transform.position.y <= transform.position.y)
             {
                 rb.velocity = new Vector2(-1 * rb.velocity.x, Random.Range(1.1f, 1.2f) * rb.velocity.y);
             }
-            else if (Mathf.Abs(rb.velocity.y) < 3f && collision.transform.position.y >= transform.position.y)
+            else if (Mathf.Abs(rb.velocity.y) < 5f && collision.transform.position.y >= transform.position.y)
             {
                 rb.velocity = new Vector2(-1 * rb.velocity.x, Random.Range(-1.2f, -1.1f) * rb.velocity.y);
             }
@@ -74,41 +74,24 @@ public class Fireball_movement : MonoBehaviour
     {
         if (collision.gameObject.tag == "LeftWall")
         {
-            //GetDestory();
+            GetDestory();
+            Score.score_ai += 1;
+            Crtl_fb.ctrl = 1;
         }
         else if(collision.gameObject.tag == "RightWall")
         {
-            //GetDestory();
+            GetDestory();
+            Score.score_player+=1;
+            Crtl_fb.ctrl = 0;
         }
     }
     void GetDestory()
     {
+        Crtl_fb.create_ball = 1;
         rb.velocity = new Vector2(0, 0);
         animator.SetTrigger("Exp");
         //Destroy(gameObject);
         Destroy(gameObject, this.GetComponent<Animator>().GetCurrentAnimatorStateInfo(0).length + 0.01f);
-        Debug.Log("Lwall");
     }
 }
-/*
- if (Mathf.Abs(rb.velocity.x) < 1f)
-            {
-                rb.velocity = new Vector2(startmovement.x, Random.Range(-1f, 1f)*startmovement.y);
-            }
-            else if (Mathf.Abs(rb.velocity.y) < 0.01f)
-            {
-                rb.velocity = new Vector2(rb.velocity.x * -1.2f, 1 * 1.2f);
-            }
-            else if ( Mathf.Abs(rb.velocity.x) > 12f && Mathf.Abs(rb.velocity.y) < 3.01f)
-            {
-                rb.velocity = new Vector2(rb.velocity.x * -1f,rb.velocity.y * Random.Range(1f, 1.5f));
-            }
-            else if (Mathf.Abs(rb.velocity.x) < 12f && Mathf.Abs(rb.velocity.y) < 3.01f)
-            {
-                rb.velocity = new Vector2(rb.velocity.x * -1.2f, rb.velocity.y * Random.Range(-1f, 1.5f));
-            }
-            else
-            {
-                rb.velocity = new Vector2(rb.velocity.x * -1f, rb.velocity.y * 1f);
-            }
-*/
+
