@@ -63,7 +63,9 @@ public class AI_movement : MonoBehaviour
     }
 
 	void AI_Move(Vector2 direction)
-    { 
+    {
+        if (((Vector2)transform.position + (direction * speed * Time.deltaTime)).y > 4 || ((Vector2)transform.position + (direction * speed * Time.deltaTime)).y < -4)
+            return;
         rb.MovePosition((Vector2)transform.position + (direction * speed * Time.deltaTime));
 		animator.SetFloat("Speed", Mathf.Abs(direction.y));
         //Debug.Log(pos_y);

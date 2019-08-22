@@ -80,13 +80,13 @@ public class Fireball_movement : MonoBehaviour
     {
         if (collision.gameObject.tag == "LeftWall")
         {
-            //GetDestory();
+            GetDestory();
             Score.score_ai += 1;
             Ctrl_fb.ctrl = 1;
         }
         else if(collision.gameObject.tag == "RightWall")
         {
-            //GetDestory();
+            GetDestory();
             Score.score_player+=1;
             Ctrl_fb.ctrl = 0;
         }
