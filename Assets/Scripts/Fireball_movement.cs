@@ -14,11 +14,17 @@ public class Fireball_movement : MonoBehaviour
     [SerializeField]
     private Vector2 startmovement;
 
+    public static int reverse;
+
     // Start is called before the first frame update
     void Start()
     {
         rb = GetComponent<Rigidbody2D>();
         sr = GetComponent<SpriteRenderer>();
+        if(reverse < 0)
+        {
+            sr.flipX = false;
+        }
     }
 
     // Update is called once per frame
@@ -46,7 +52,7 @@ public class Fireball_movement : MonoBehaviour
                 rb.velocity = new Vector2(rb.velocity.x, 3f);
             if (Mathf.Abs(rb.velocity.x) < 1f)
             {
-                rb.velocity = new Vector2(1 * Random.Range(0.9f, 1f) * startmovement.x, Random.Range(-1f, 1f) * startmovement.y);
+                rb.velocity = new Vector2(reverse * 1 * Random.Range(0.9f, 1f) * startmovement.x, Random.Range(-1f, 1f) * startmovement.y);
             }
             else if (Mathf.Abs(rb.velocity.x) < 12f && collision.transform.position.y >= transform.position.y)
             {
@@ -74,20 +80,20 @@ public class Fireball_movement : MonoBehaviour
     {
         if (collision.gameObject.tag == "LeftWall")
         {
-            GetDestory();
+            //GetDestory();
             Score.score_ai += 1;
-            Crtl_fb.ctrl = 1;
+            Ctrl_fb.ctrl = 1;
         }
         else if(collision.gameObject.tag == "RightWall")
         {
-            GetDestory();
+            //GetDestory();
             Score.score_player+=1;
-            Crtl_fb.ctrl = 0;
+            Ctrl_fb.ctrl = 0;
         }
     }
     void GetDestory()
     {
-        Crtl_fb.create_ball = 1;
+        Ctrl_fb.create_ball = 1;
         rb.velocity = new Vector2(0, 0);
         animator.SetTrigger("Exp");
         //Destroy(gameObject);

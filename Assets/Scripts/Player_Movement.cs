@@ -56,7 +56,7 @@ public class Player_Movement : MonoBehaviour
         animator.SetFloat("Speed", Mathf.Abs(direction.y));   
     }
 
-    private void Reset()
+    void Reset()
     {
         animator.SetFloat("Action", 0.0f);
     }

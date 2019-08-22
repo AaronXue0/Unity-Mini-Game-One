@@ -4,75 +4,79 @@ using UnityEngine;
 
 public class AI_movement : MonoBehaviour
 {
-	[SerializeField]
-	private float speed;
-	[SerializeField]
-	private Animator animator;
-	[SerializeField]
-	public Rigidbody2D rb;
+    [SerializeField]
+    private float speed;
+    [SerializeField]
+    private Animator animator;
+    [SerializeField]
+    public Rigidbody2D rb;
 
-	private Vector2 movement;
-	public float Action_CD;
-	private float CD;
-    
+    private Vector2 movement;
+    public float Action_CD;
+    private float CD;
+
+    private GameObject fb;
+    private Rigidbody2D rb_fb;
+    private float pos_y;
+
     // Start is called before the first frame update
     void Start()
-	{
-		rb = this.GetComponent<Rigidbody2D>();
-		CD = 0;
-	}
+    {
+        rb = this.GetComponent<Rigidbody2D>();
+        CD = 0;
+    }
 
-	// Update is called once per frame
-	void Update()
-	{
-		Reset();
-        //transform.position = Vector2.MoveTowards(transform.position, fb.transform.position, speed * Time.deltaTime);
-        //Debug.Log(fb.transform.position.x - transform.position.x);
-        if(CD < 0.01)
+    // Update is called once per frame
+    void Update()
+    {
+        //Debug.Log(transform.position.y - pos_y);
+        if (Ctrl_fb.catch_ball == 1)
+            Catchball();
+        if(fb != null)
         {
-            //animator.SetFloat("Action", 1.0f);
-            CD = Action_CD;
+                getmovement();
         }
-        else if (CD > 0.0)
-        {
-            CD -= Time.deltaTime;
-        }
+    }
+
+    void getmovement()
+    {
+        if(transform.position.y >= rb_fb.transform.position.y)
+            movement = new Vector2(0.0f, -1f);
+        else
+            movement = new Vector2(0.0f, 1f);
     }
 
 	void FixedUpdate()
 	{
-		if (CD - 0.01 < 0.01)
+        if (CD - 0.01 < 0.01)
 		{
             //Debug.Log(movement + "AI");
-            if (Mathf.Abs(movement.y) > 0)
-            {
-                movement.x = 0f;
-                Player_Move(movement);
-            }
+            AI_Move(movement);
 		}
 	}
 
-	void Player_Move(Vector2 direction)
-	{
-		if (((Vector2)transform.position + (direction * speed * Time.deltaTime)).y > 4 || ((Vector2)transform.position + (direction * speed * Time.deltaTime)).y < -4)
-			return;
-        if (movement.y >= 1.0f)
-            movement.y = 1.0f;
+    void Catchball()
+    {
+        fb = GameObject.FindGameObjectWithTag("FB");
+        rb_fb = fb.GetComponent<Rigidbody2D>();
+        Ctrl_fb.catch_ball = 0;
+    }
+
+	void AI_Move(Vector2 direction)
+    { 
         rb.MovePosition((Vector2)transform.position + (direction * speed * Time.deltaTime));
 		animator.SetFloat("Speed", Mathf.Abs(direction.y));
-	}
-
-	private void Reset()
-	{
-		animator.SetFloat("Action", 0.0f);
+        //Debug.Log(pos_y);
 	}
 }
 
-/*
- * instantiate flame : "fly" and "face" the right side!
+//transform.position = Vector2.MoveTowards(transform.position, fb.transform.position, speed * Time.deltaTime);
+//Debug.Log(fb.transform.position.x - transform.position.x);
 
-fireball -> movement
-ai -> chase,predic
-tilemap : image broken
-score
+/*
+ * ai -> chase,predic
+ * score -> win/lose
+
+#fireball -> movement
+#tilemap : image broken
 */
