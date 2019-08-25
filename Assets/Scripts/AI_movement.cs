@@ -15,6 +15,8 @@ public class AI_movement : MonoBehaviour
     public float Action_CD;
     private float CD;
 
+    public static int ai_start;
+
     private GameObject fb;
     private Rigidbody2D rb_fb;
     private float pos_y;
@@ -24,6 +26,7 @@ public class AI_movement : MonoBehaviour
     {
         rb = this.GetComponent<Rigidbody2D>();
         CD = 0;
+        ai_start = 0;
     }
 
     // Update is called once per frame
@@ -32,28 +35,26 @@ public class AI_movement : MonoBehaviour
         //Debug.Log(transform.position.y - pos_y);
         if (Ctrl_fb.catch_ball == 1)
             Catchball();
-        if(fb != null)
-        {
-                getmovement();
-        }
-    }
-
-    void getmovement()
-    {
-        if(transform.position.y >= rb_fb.transform.position.y)
-            movement = new Vector2(0.0f, -1f);
-        else
-            movement = new Vector2(0.0f, 1f);
     }
 
 	void FixedUpdate()
 	{
-        if (CD - 0.01 < 0.01)
-		{
-            //Debug.Log(movement + "AI");
-            AI_Move(movement);
-		}
+        if (fb != null)
+        {
+            getmovement();
+        }
+        else
+            movement = new Vector2(0.0f, 0.0f);
+        AI_Move(movement);
 	}
+
+    void getmovement()
+    {
+        if (transform.position.y - rb_fb.transform.position.y > 0.5)
+            movement = new Vector2(0.0f, -0.8f);
+        else if(transform.position.y - rb_fb.transform.position.y < -0.5)
+            movement = new Vector2(0.0f, 0.8f);
+    }
 
     void Catchball()
     {
@@ -65,6 +66,8 @@ public class AI_movement : MonoBehaviour
 	void AI_Move(Vector2 direction)
     {
         if (((Vector2)transform.position + (direction * speed * Time.deltaTime)).y > 4 || ((Vector2)transform.position + (direction * speed * Time.deltaTime)).y < -4)
+            return;
+        if (Mathf.Abs(direction.y) < 0.01)
             return;
         rb.MovePosition((Vector2)transform.position + (direction * speed * Time.deltaTime));
 		animator.SetFloat("Speed", Mathf.Abs(direction.y));
