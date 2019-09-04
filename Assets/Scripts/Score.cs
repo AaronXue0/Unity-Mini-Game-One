@@ -8,11 +8,15 @@ public class Score : MonoBehaviour
 {
     public static int score_ai;
     public static int score_player;
-
+    
     private Text txt;
     private float delay_time;
 
     private int gamemode;
+    [SerializeField]
+    private int endScoreAi;
+    [SerializeField]
+    private int endScorePlayer;
 
     // Start is called before the first frame update
     void Start()
@@ -31,22 +35,22 @@ public class Score : MonoBehaviour
         txt.text = score_player + " : " + score_ai;
         if(gamemode == 1)
         {
-            if (score_ai >= 5 || score_player >= 1)
+            if (score_ai >= endScoreAi || score_player >= endScorePlayer)
             {
-                if(score_ai >= 5)
+                if(score_ai >= endScoreAi)
                     txt.text = "You lose";
-                else if (score_player >= 1)
+                else if (score_player >= endScorePlayer)
                     txt.text = "You Win";
                 EndGame();
             }
         }
         else if(gamemode == 2)
         {
-            if (score_ai >= 3 || score_player >= 3)
+            if (score_ai >= endScoreAi || score_player >= endScorePlayer)
             {
-                if (score_ai >= 3)
+                if (score_ai >= endScoreAi)
                     txt.text = "Player2 Win";
-                else if (score_player >= 3)
+                else if (score_player >= endScorePlayer)
                     txt.text = "Player1 Win";
                 EndGame();
             }
