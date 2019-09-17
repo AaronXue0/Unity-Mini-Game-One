@@ -18,7 +18,7 @@ public class Ctrl_fb : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        ctrl = 1;
+        ctrl = 0;
         create_ball = 1;
         delay_time = 1f;
         Fireball_movement.reverse = 1;

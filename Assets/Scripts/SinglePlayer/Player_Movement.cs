@@ -24,14 +24,14 @@ public class Player_Movement : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        Reset();
         if (Input.GetKey(KeyCode.Space))
             animator.SetFloat("Action", 1.0f);
-        movement = new Vector2(0.0f, Input.GetAxis("Vertical"));
     }
 
     void FixedUpdate()
     {
+        Reset();
+        movement = new Vector2(0.0f, Input.GetAxis("Vertical"));
         Player_Move(movement);
     }
 
