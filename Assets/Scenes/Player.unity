@@ -3763,7 +3763,7 @@ MonoBehaviour:
   speed: 10
   animator: {fileID: 599055971}
   rb: {fileID: 1122700079}
-  Action_CD: 1.1
+  Action_CD: 0
 --- !u!1 &1293124466
 GameObject:
   m_ObjectHideFlags: 0
